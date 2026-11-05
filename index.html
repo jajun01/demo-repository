@@ -3,104 +3,26 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#173c32">
-  <title>전역까지, 무사히</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Gowun+Dodum&family=Nanum+Myeongjo:wght@700;800&display=swap');
-    :root{--ink:#172b25;--green:#24483b;--green2:#38634e;--paper:#f4f1e6;--card:#fffdf6;--muted:#788078;--line:#d9ddcf;--lime:#d6ed96;--orange:#e89c61;--red:#be6e5c;--shadow:0 18px 50px #14271e12}
-    *{box-sizing:border-box} body{margin:0;background:var(--paper);color:var(--ink);font-family:'Gowun Dodum',sans-serif;min-height:100vh;background-image:radial-gradient(#48634812 .7px,transparent .7px);background-size:8px 8px}
-    button{font:inherit} .shell{width:min(1100px,calc(100% - 36px));margin:0 auto;padding:26px 0 56px}
-    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:25px}.brand{display:flex;align-items:center;gap:12px}.brand-mark{width:38px;height:38px;background:var(--green);border-radius:12px;display:grid;place-items:center;color:var(--lime);font-size:19px}.brand-name{font-size:13px;letter-spacing:.11em;font-weight:bold}.brand-name span{display:block;font-family:'DM Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.16em;margin-top:3px}.top-actions{display:flex;gap:9px}.small-btn{border:1px solid var(--line);border-radius:99px;background:#ffffff80;padding:8px 13px;font-size:12px;color:var(--green);cursor:pointer}.small-btn:hover{background:white}
-    .hero{display:flex;justify-content:space-between;align-items:end;margin-bottom:21px;gap:20px}.eyebrow{font-family:'DM Mono',monospace;color:var(--green2);font-size:10px;letter-spacing:.19em;text-transform:uppercase;margin:0 0 10px}.hero h1{font:800 clamp(33px,5vw,54px)/1.1 'Nanum Myeongjo',serif;letter-spacing:-.06em;margin:0}.hero h1 em{font-style:normal;color:var(--green2)}.hero-note{max-width:285px;color:#657169;font-size:13px;line-height:1.75;margin:0 0 3px}
-    .layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(280px,.85fr);gap:18px;align-items:start}.main-card,.side-card{background:var(--card);border:1px solid #e2e3d8;border-radius:18px;box-shadow:var(--shadow)}.main-card{overflow:hidden}.scene{background:var(--green);color:#fffdf5;padding:23px 26px 25px;position:relative;overflow:hidden;min-height:186px}.scene:after{content:'✳';position:absolute;right:24px;top:-54px;font-size:200px;color:#ffffff0b;line-height:1}.scene-top{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}.month-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.16em;color:#c8d7c7}.rank-pill{border:1px solid #ffffff40;border-radius:99px;padding:6px 11px;font-size:11px;color:var(--lime)}.scene h2{font:700 27px 'Nanum Myeongjo',serif;margin:21px 0 7px;position:relative;z-index:1}.scene p{color:#d9e3d8;font-size:13px;line-height:1.7;max-width:550px;margin:0;position:relative;z-index:1}.progress-wrap{padding:15px 26px 0}.progress-head{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:7px}.progress{height:5px;background:#e7e9df;border-radius:9px;overflow:hidden}.progress i{display:block;height:100%;background:var(--green2);border-radius:9px;transition:width .3s}
-    .event-area{padding:20px 26px 24px}.event-label{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.12em;color:var(--muted);margin-bottom:10px}.event-label:before{content:'';width:6px;height:6px;border-radius:50%;background:var(--orange)}.event-title{font-size:20px;font-weight:bold;margin:0 0 7px;letter-spacing:-.03em}.event-desc{font-size:13px;color:#6c756e;line-height:1.7;margin:0 0 17px;min-height:22px}.choices{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.choice{background:#f8f8f0;border:1px solid var(--line);border-radius:12px;text-align:left;padding:12px 12px 11px;cursor:pointer;transition:.18s;min-height:93px;color:var(--ink)}.choice:hover{transform:translateY(-2px);border-color:#97ad8f;background:#fff}.choice:disabled{cursor:default;opacity:.7;transform:none}.choice strong{display:block;font-size:13px;margin-bottom:5px}.choice span{display:block;font-size:10px;color:#727b72;line-height:1.5}.choice .icon{font-size:16px;margin-bottom:7px;display:block}.feedback{margin-top:12px;border-radius:10px;background:#eef3e7;padding:11px 13px;font-size:12px;line-height:1.65;color:#3e5b48;display:none}.feedback.show{display:block}.continue{width:100%;margin-top:10px;border:0;border-radius:10px;padding:12px;background:var(--green);color:white;font-weight:bold;cursor:pointer;display:none}.continue.show{display:block}.continue:hover{background:var(--green2)}
-    .side-stack{display:grid;gap:14px}.side-card{padding:18px}.side-title{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:bold;margin-bottom:15px}.side-title small{font:10px 'DM Mono',monospace;color:var(--muted);letter-spacing:.08em}.stat{margin:13px 0}.stat-head{display:flex;justify-content:space-between;font-size:11px;margin-bottom:7px}.stat-head span:last-child{font:10px 'DM Mono',monospace;color:#6e786f}.stat-track{height:6px;border-radius:9px;background:#eceee5;overflow:hidden}.stat-track b{height:100%;display:block;border-radius:9px;background:var(--green2);transition:width .3s}.stat:nth-of-type(3) .stat-track b{background:#8ca05e}.stat:nth-of-type(4) .stat-track b{background:#d2925c}.stat:nth-of-type(5) .stat-track b{background:#77959a}.rank-list{display:grid;gap:7px}.rank-row{display:flex;justify-content:space-between;font-size:11px;color:#879087;padding:7px 9px;border-radius:7px}.rank-row.active{background:#edf2e5;color:var(--green);font-weight:bold}.rank-row.done{color:#4c7954}.log{font-size:11px;line-height:1.7;color:#71796f;max-height:111px;overflow:auto}.log p{margin:0;padding:6px 0;border-bottom:1px solid #eef0e8}.log strong{color:var(--green);font-family:'DM Mono',monospace;font-size:9px;margin-right:7px}.footer-note{text-align:center;color:#8a9188;font-size:10px;margin:18px 0 0;letter-spacing:.03em}
-    .overlay{position:fixed;inset:0;background:#172b25aa;display:grid;place-items:center;padding:20px;z-index:5}.modal{width:min(450px,100%);background:var(--card);border-radius:20px;padding:31px;box-shadow:0 28px 90px #0004;text-align:center}.seal{font-size:28px;width:56px;height:56px;margin:0 auto 16px;border-radius:18px;background:#edf2e3;display:grid;place-items:center}.modal .eyebrow{margin-bottom:9px}.modal h2{font:800 30px 'Nanum Myeongjo',serif;margin:0 0 10px;letter-spacing:-.06em}.modal p{font-size:13px;line-height:1.8;color:#6c756e;margin:0 auto 22px;max-width:330px}.name-input{width:100%;border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:#fff;margin-bottom:10px;font:inherit;outline:none}.name-input:focus{border-color:var(--green2)}.primary{width:100%;border:0;border-radius:10px;background:var(--green);color:white;padding:13px;font-weight:bold;cursor:pointer}.primary:hover{background:var(--green2)}.hidden{display:none!important}.ending .scene{background:#37573c}.ending-card{border:1px solid #dce4d3;background:#f3f6ec;border-radius:12px;padding:14px;text-align:center;color:#426048;font-size:13px;line-height:1.8;margin-top:15px}
-    @media(max-width:760px){.hero{display:block}.hero-note{margin-top:13px}.layout{grid-template-columns:1fr}.side-stack{grid-template-columns:1fr 1fr}.side-stack .side-card:last-child{grid-column:1/-1}.hero h1{font-size:39px}.scene{min-height:175px}}
-    @media(max-width:480px){.shell{width:calc(100% - 24px);padding-top:16px}.brand-name{font-size:11px}.small-btn{padding:7px 10px;font-size:10px}.hero h1{font-size:34px}.scene{padding:19px 18px 21px}.scene h2{font-size:24px}.event-area{padding:18px}.progress-wrap{padding-left:18px;padding-right:18px}.choices{grid-template-columns:1fr}.choice{min-height:0;padding:10px 12px;display:grid;grid-template-columns:27px 1fr;column-gap:5px;align-items:center}.choice .icon{grid-row:span 2;margin:0}.choice strong{margin:0}.side-stack{grid-template-columns:1fr}.side-stack .side-card:last-child{grid-column:auto}.side-card{padding:16px}}
-  </style>
+  <meta name="theme-color" content="#182521">
+  <title>전역까지, 무사히 — 병영 아케이드</title>
+  <link rel="stylesheet" href="game.css">
 </head>
 <body>
   <div class="shell">
-    <header>
-      <div class="brand"><div class="brand-mark">✳</div><div class="brand-name">전역까지, 무사히<span>A LITTLE JOURNEY HOME</span></div></div>
-      <div class="top-actions"><button class="small-btn" id="soundBtn" aria-label="효과음 설정">♪ 소리 끔</button><button class="small-btn" id="resetBtn">새로 시작</button></div>
-    </header>
-    <section class="hero"><div><p class="eyebrow">나의 군 생활 기록 · 24개월</p><h1>오늘도 한 걸음,<br><em>전역까지 무사히.</em></h1></div><p class="hero-note">작은 선택과 동료의 응원이 모여<br>무사히 집으로 돌아가는 이야기가 됩니다.</p></section>
+    <header><a class="brand" href="./">▥ 전역까지, 무사히 <small>BARRACKS ARCADE / 01</small></a><div class="top-actions"><button id="soundBtn">♪ 소리 OFF</button><button id="resetBtn">새로 시작</button></div></header>
+    <section class="hero"><div class="eyebrow">24 MONTHS · 4 STATS · ONE WAY HOME</div><h1>군대에서 <span>성장하기.</span></h1><p>선택은 과감하게. 위기는 미니게임으로. 전역까지 살아남는 나만의 병영 라이프.</p></section>
     <div class="layout">
-      <main class="main-card" id="mainCard">
-        <section class="scene"><div class="scene-top"><span class="month-label" id="monthLabel">입대 전</span><span class="rank-pill" id="rankPill">새로운 시작</span></div><h2 id="sceneTitle">첫날의 마음을 챙겨요</h2><p id="sceneText">이름을 정하고 군 생활을 시작해 보세요. 쉬어 가고, 주변에 도움을 청하고, 동료와 함께라면 24개월도 차근차근 지나갈 거예요.</p></section>
-        <div class="progress-wrap"><div class="progress-head"><span>전역까지의 여정</span><span id="progressText">0 / 24개월</span></div><div class="progress"><i id="progressBar" style="width:0%"></i></div></div>
-        <section class="event-area"><div class="event-label" id="eventLabel">입대 준비</div><h3 class="event-title" id="eventTitle">새로운 출발선에 섰어요</h3><p class="event-desc" id="eventDesc">전역까지 무사히 가기 위한 첫 선택을 해보세요.</p><div class="choices" id="choices"></div><div class="feedback" id="feedback"></div><button class="continue" id="continueBtn">다음 달로 가기 →</button><div class="ending-card hidden" id="endingCard"></div></section>
+      <main>
+        <section class="panel world"><div class="panel-head"><span><i class="live"></i> 생활관 / LIVE</span><span id="rankPill">입대 대기</span></div><canvas id="world" width="768" height="288" role="img" aria-label="도트로 그린 부대와 군인"></canvas><div class="world-caption"><span id="sceneTitle">당신의 군 생활이 시작됩니다</span><strong id="monthLabel">DAY 000</strong></div><div class="service"><div><span>전역까지의 여정</span><span id="progressText">0 / 24개월</span></div><div class="track"><b id="progressBar"></b></div></div></section>
+        <section class="panel decision"><div class="eyebrow" id="eventLabel">MISSION BRIEFING</div><h2 id="eventTitle">오늘의 선택</h2><p id="eventDesc">이름을 입력하고 시작하세요.</p><div class="choices" id="choices"></div><div id="feedback" class="feedback hidden" role="status"></div><button id="continueBtn" class="primary hidden">다음 달 →</button></section>
+        <section class="panel practice"><div><h2>훈련장 <small>FREE PLAY</small></h2><p>미리 연습해 보세요. 연습은 지표에 영향을 주지 않아요.</p></div><div id="practiceButtons" class="practice-buttons"></div></section>
       </main>
-      <aside class="side-stack">
-        <section class="side-card"><div class="side-title">나의 컨디션 <small>STATUS</small></div><div id="stats"></div></section>
-        <section class="side-card"><div class="side-title">진급 기록 <small>RANK</small></div><div class="rank-list" id="rankList"></div></section>
-        <section class="side-card"><div class="side-title">오늘의 기록 <small>JOURNAL</small></div><div class="log" id="log"><p>아직 기록이 없어요. 첫 달을 시작해 보세요.</p></div></section>
-      </aside>
-    </div>
-    <p class="footer-note">누구나 도움을 청할 수 있고, 쉬어 가도 괜찮아요. 나의 안전과 건강이 가장 먼저입니다.</p>
+      <aside><section class="panel"><div class="panel-head">병사 상태 <small>STATUS</small></div><div class="status-body"><div class="identity"><div class="avatar">▥</div><div><strong id="playerName">신병</strong><small id="playerRank">입대를 기다리는 중</small></div></div><div id="stats"></div><p class="warning-note">▼ 지표 25 이하: 위기 미니게임 출동<br>성공 +40 / 실패 +15 · 다시 일어설 기회!</p></div></section><section class="panel"><div class="panel-head">진급 기록 <small>RANK</small></div><div id="rankList" class="rank-list"></div></section><section class="panel"><div class="panel-head">생활관 일지 <small>LOG</small></div><div id="log" class="log"></div></section></aside>
+    </div><footer>가상의 병영 아케이드입니다. 게임 속 지표는 실제 건강과 무관합니다. <span>방향키 이동 · SPACE 액션</span></footer>
   </div>
-  <div class="overlay" id="startOverlay"><div class="modal"><div class="seal">🌱</div><p class="eyebrow">YOUR JOURNEY BEGINS</p><h2>새로운 출발선</h2><p>무사히 전역하는 것이 가장 중요한 목표예요.<br>먼저 이 군인의 이름을 지어주세요.</p><input class="name-input" id="nameInput" maxlength="12" placeholder="이름 (예: 한결)" aria-label="군인 이름"><button class="primary" id="startBtn">군 생활 시작하기</button></div></div>
-  <div class="overlay hidden" id="resultOverlay"><div class="modal"><div class="seal">🏡</div><p class="eyebrow">MISSION COMPLETE</p><h2 id="resultTitle">무사히 전역했어요</h2><p id="resultText"></p><button class="primary" id="againBtn">다시 시작하기</button></div></div>
-  <script>
-    const SAVE_KEY='safe-discharge-game-v1';
-    const ranks=[{name:'이등병',from:1,to:3},{name:'일병',from:4,to:9},{name:'상병',from:10,to:15},{name:'병장',from:16,to:24}];
-    const statDefs=[['health','몸 건강','♡'],['energy','기운','✦'],['morale','마음 건강','☼'],['team','동료와의 유대','⌂']];
-    const events=[
-      ['새로운 생활에 적응하는 중','낯선 하루가 시작됐어요. 서두르지 않아도 괜찮아요.'],
-      ['동료의 표정이 어두워 보여요','말을 걸어볼까요? 서로의 작은 관심이 힘이 될 수 있어요.'],
-      ['요즘 잠이 조금 부족해요','몸이 보내는 신호를 잘 살펴보고 오늘의 리듬을 골라봐요.'],
-      ['부대에 작은 행사가 열려요','함께 웃고 이야기할 기회가 생겼어요.'],
-      ['익숙한 일과에 지루함이 찾아왔어요','짧은 산책이나 새로운 취미가 기분 전환이 될 수 있어요.'],
-      ['집에서 편지가 도착했어요','그리운 마음도 자연스러운 마음이에요. 잠시 숨을 고르고 답장을 써봐요.'],
-      ['힘든 일을 혼자 감당하는 것 같아요','믿을 만한 동료나 간부에게 이야기하는 것도 용기 있는 선택이에요.'],
-      ['다 함께 정리하는 날이에요','역할을 나누면 수월해져요. 나의 컨디션도 함께 살펴봐요.'],
-      ['주말에 잠깐 쉴 시간이 생겼어요','쉬는 시간은 다음 날을 위한 중요한 준비예요.'],
-      ['전역을 손꼽아 기다리는 밤','오늘까지 잘 해낸 자신을 다독여 주세요.']
-    ];
-    const options=[
-      {title:'충분히 쉬기',icon:'☾',desc:'몸과 마음에 여유를 줘요',delta:{health:5,energy:13,morale:3},line:'휴식으로 기운을 회복했어요. 쉬어 가는 것도 잘 해내는 방법이에요.'},
-      {title:'동료와 이야기하기',icon:'☻',desc:'함께 나누면 마음이 가벼워져요',delta:{morale:8,team:12,energy:-3},line:'동료와 마음을 나눴어요. 서로 기대어 갈 수 있는 사이가 됐어요.'},
-      {title:'가볍게 몸 풀기',icon:'↗',desc:'내 페이스로 활력을 채워요',delta:{health:9,energy:-5,morale:3},line:'무리하지 않고 몸을 움직였어요. 작은 습관이 건강을 지켜줘요.'}
-    ];
-    let state=null, chosen=false, sound=false;
-    const $=id=>document.getElementById(id);
-    const clamp=n=>Math.max(0,Math.min(100,n));
-    const rankAt=m=>ranks.find(r=>m>=r.from&&m<=r.to)||null;
-    const monthName=m=>String(m).padStart(2,'0');
-    function render(){
-      if(!state)return;
-      const m=state.month, rank=rankAt(m);
-      $('monthLabel').textContent=m?`복무 ${monthName(m)}개월째`:'입대 전';
-      $('rankPill').textContent=rank?rank.name:'새로운 시작';
-      $('sceneTitle').textContent=m?`${state.name}의 ${rank.name} 생활`:'첫날의 마음을 챙겨요';
-      $('sceneText').textContent=m?`${state.name}님, 오늘도 자기 속도로 잘 지내고 있어요. 몸과 마음을 살피며 한 달씩 나아가요.`:'이름을 정하고 군 생활을 시작해 보세요. 쉬어 가고, 주변에 도움을 청하고, 동료와 함께라면 24개월도 차근차근 지나갈 거예요.';
-      $('progressText').textContent=`${m} / 24개월`; $('progressBar').style.width=`${m/24*100}%`;
-      $('stats').innerHTML=statDefs.map(([key,label,icon])=>`<div class="stat"><div class="stat-head"><span>${icon} ${label}</span><span>${state[key]}%</span></div><div class="stat-track"><b style="width:${state[key]}%"></b></div></div>`).join('');
-      $('rankList').innerHTML=ranks.map(r=>`<div class="rank-row ${m>=r.from&&m<=r.to?'active':m>r.to?'done':''}"><span>${m>r.to?'✓ ':''}${r.name}</span><span>${r.from}–${r.to}개월</span></div>`).join('');
-      $('log').innerHTML=state.log.length?state.log.slice().reverse().map(x=>`<p><strong>${x.month}월</strong>${x.text}</p>`).join(''):'<p>아직 기록이 없어요. 첫 달을 시작해 보세요.</p>';
-      if(m===0){$('eventLabel').textContent='입대 준비';$('eventTitle').textContent='새로운 출발선에 섰어요';$('eventDesc').textContent='전역까지 무사히 가기 위한 첫 선택을 해보세요.';}
-      else if(!chosen){const ev=events[(m*7+Math.floor(m/3))%events.length];$('eventLabel').textContent=`${rank.name} · ${monthName(m)}개월`;$('eventTitle').textContent=ev[0];$('eventDesc').textContent=ev[1];}
-    }
-    function startGame(name){state={name:name.trim()||'한결',month:0,health:78,energy:76,morale:72,team:48,log:[]};chosen=false;save();$('startOverlay').classList.add('hidden');$('resultOverlay').classList.add('hidden');$('mainCard').classList.remove('ending');render();showChoices();}
-    function showChoices(){const container=$('choices');container.innerHTML='';if(!state)return;const start=state.month===0;const picks=start?[options[1],options[0],options[2]]:options; picks.forEach((o,i)=>{const b=document.createElement('button');b.className='choice';b.innerHTML=`<span class="icon">${o.icon}</span><strong>${start?['동료에게 먼저 인사하기','생활에 필요한 것 정리하기','가볍게 몸 풀기'][i]:o.title}</strong><span>${start?['좋은 첫인상을 나눠요','차근차근 주변을 익혀요','긴장을 풀고 시작해요'][i]:o.desc}</span>`;b.onclick=()=>selectOption(start?i:i);container.appendChild(b);});}
-    function selectOption(i){if(chosen)return;chosen=true;const start=state.month===0;let o=options[i];if(start&&i===0)o=options[1];if(start&&i===1)o=options[0];Object.entries(o.delta).forEach(([k,v])=>state[k]=clamp(state[k]+v));if(start){state.month=1;state.log.push({month:1,text:`${state.name}님, 첫 달을 시작했어요.`});}else{const event=events[(state.month*7+Math.floor(state.month/3))%events.length];state.log.push({month:state.month,text:event[0]+' · '+o.title});}state.lastLine=o.line;save();render();$('feedback').textContent=o.line;$('feedback').classList.add('show');$('choices').querySelectorAll('button').forEach(b=>b.disabled=true);$('continueBtn').classList.add('show');playTone();}
-    function nextMonth(){if(!chosen)return;$('feedback').classList.remove('show');$('continueBtn').classList.remove('show');if(state.month>=24){finish();return;}state.month++;chosen=false;
-      // Routine life slowly uses energy; rest and supportive choices help keep the journey steady.
-      state.energy=clamp(state.energy-2);state.morale=clamp(state.morale-1);
-      if([4,10,16].includes(state.month)){state.log.push({month:state.month,text:`${rankAt(state.month).name}(으)로 진급했어요!`});}
-      render();showChoices();save();}
-    function finish(){const safe=state.health>=25&&state.morale>=20; $('resultTitle').textContent=safe?'무사히 전역했어요':'끝까지 잘 버텨냈어요';$('resultText').textContent=`${state.name}님은 ${state.month}개월의 여정을 마쳤어요. ${safe?'동료와 서로를 살피며 건강하게 병장으로 복무하고, 이제 소중한 일상으로 돌아갑니다.':'그동안 정말 수고 많았어요. 앞으로는 자신을 돌보며 회복할 시간이에요.'} 지금까지 쌓아온 하루하루를 자랑스러워해도 좋아요.`;$('resultOverlay').classList.remove('hidden');state.done=true;save();}
-    function save(){if(state){state.chosen=chosen;localStorage.setItem(SAVE_KEY,JSON.stringify(state));}}
-    function load(){try{const data=JSON.parse(localStorage.getItem(SAVE_KEY));if(data&&data.name){state=data;chosen=!!state.chosen;if(state.done){$('startOverlay').classList.add('hidden');$('resultOverlay').classList.remove('hidden');}else{$('startOverlay').classList.add('hidden');render();showChoices();if(chosen){$('feedback').textContent=state.lastLine||'이번 달 선택을 기록했어요.';$('feedback').classList.add('show');$('choices').querySelectorAll('button').forEach(b=>b.disabled=true);$('continueBtn').classList.add('show');}}}}catch(e){localStorage.removeItem(SAVE_KEY)}}
-    function playTone(){if(!sound)return;try{const ctx=new (window.AudioContext||window.webkitAudioContext)(),o=ctx.createOscillator(),g=ctx.createGain();o.frequency.value=660;g.gain.value=.035;o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+.08);}catch(e){}}
-    $('startBtn').onclick=()=>startGame($('nameInput').value);$('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')startGame($('nameInput').value)});
-    $('continueBtn').onclick=nextMonth;
-    $('resetBtn').onclick=()=>{if(confirm('지금까지의 기록을 지우고 새로 시작할까요?')){$('resultOverlay').classList.add('hidden');$('startOverlay').classList.remove('hidden');$('nameInput').value='';localStorage.removeItem(SAVE_KEY);state=null;}};
-    $('againBtn').onclick=()=>{localStorage.removeItem(SAVE_KEY);$('resultOverlay').classList.add('hidden');$('startOverlay').classList.remove('hidden');$('nameInput').value='';state=null;};
-    $('soundBtn').onclick=()=>{sound=!sound;$('soundBtn').textContent=sound?'♫ 소리 켬':'♪ 소리 끔';};
-    render();showChoices();load();
-  </script>
+  <dialog id="startDialog"><form id="startForm"><div class="eyebrow">NEW RECRUIT</div><div class="big-icon">▥</div><h2>신병, 이름이 뭐지?</h2><p>24개월의 선택과 네 가지 위기 미션.<br>너만의 전역 스토리를 시작해 봐.</p><label for="nameInput">병사 이름</label><input id="nameInput" maxlength="12" placeholder="예: 모근홍" autocomplete="off"><button class="primary" type="submit">입대하기 →</button></form></dialog>
+  <dialog id="miniDialog" aria-labelledby="miniTitle"><div class="mini-heading"><span id="miniBadge" class="eyebrow">BOSS ENCOUNTER</span><div><button id="practiceExit" class="hidden">연습 나가기</button><button id="pauseBtn" class="hidden">일시정지</button></div></div><h2 id="miniTitle"></h2><p id="miniDesc"></p><div class="mini-hud"><span id="miniScore">준비</span><strong id="miniTime">20.0s</strong></div><canvas id="arena" width="640" height="360" role="img" aria-label="미니게임 경기장. 아래 조작 설명에 따라 플레이하세요."></canvas><p id="miniMessage" role="status"></p><div id="touchControls" class="touch-controls"><button data-key="ArrowLeft" aria-label="왼쪽 이동">◀</button><button data-key="ArrowRight" aria-label="오른쪽 이동">▶</button><button data-key="Space" class="action">SPACE / 액션</button></div><button id="miniStart" class="primary">미션 시작</button><button id="miniClose" class="primary hidden">결과 확인 →</button></dialog>
+  <dialog id="resultDialog"><div class="eyebrow">MISSION COMPLETE</div><div class="big-icon">★</div><h2>전역을 명 받았습니다!</h2><p id="resultText"></p><button class="primary" id="againBtn">새로운 군 생활 시작</button></dialog>
+  <script src="game.js"></script>
 </body>
 </html>

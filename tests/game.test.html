@@ -1,0 +1,55 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>병영 아케이드 회귀 테스트</title>
+<pre id="results">RUNNING</pre>
+<iframe id="game" src="../index.html" width="1200" height="1000"></iframe>
+<script>
+// Serve the repository and open this file in a browser. Tests use a separate
+// session and restore the player's save when complete.
+const results=document.getElementById('results');
+document.getElementById('game').onload=()=>{
+ const w=document.getElementById('game').contentWindow;
+ const run=code=>w.eval(code);
+ const saved=w.localStorage.getItem('barracks-arcade-v2');
+ let passed=0;
+ function check(label,code){if(!run(code))throw new Error(label);passed++;}
+ try {
+  run("start('테스트 병사')");
+  check('fresh game',"state.month===1 && !state.chosen && document.querySelectorAll('.choice').length===3");
+  run('choose(0)');
+  check('large changes and clamping', 'state.health===100 && state.energy===46 && state.team===42');
+  run('choose(0)');
+  check('one choice per month','state.energy===46');
+  run('next();choose(0)');
+  check('multiple crisis queue','mini.type==="energy" && state.pending.join(",")==="energy,team"');
+  run('next()');check('cannot bypass boss','state.month===2');
+  run('beginMini();endMini(true);endMini(true)');
+  check('reward once','state.energy===62 && state.pending.length===1');
+  run('closeMini()');check('next queued boss','mini.type==="team"');
+  run('beginMini();endMini(false);closeMini();next()');
+  check('loss recovers and progression resumes','state.team===39 && state.month===3 && !mini');
+  run("openMini('health',true);beginMini();mini.t=2;act();act()");
+  check('rhythm note cannot score twice','mini.score===1');
+  run('pause();tick(1)');check('pause freezes time','mini.t===2');
+  run('pause();mini.t=15;tick(.01)');check('rhythm failure','mini.phase==="result" && mini.score===1');
+  run('closeMini();openMini("health",true);beginMini();for(let i=0;i<12;i++){mini.t=2+i;act();}mini.t=15;tick(.01)');
+  check('rhythm success','mini.score===12 && mini.message.startsWith("MISSION CLEAR")');
+  run('closeMini();openMini("energy",true);beginMini();for(const p of mini.snow){mini.x=p.x;mini.cooldown=0;act();}tick(.01)');
+  check('snow clear win','mini.score===10 && mini.phase==="result"');
+  check('practice leaves stats unchanged','state.health===100 && state.energy===62 && state.team===39');
+  run('closeMini();openMini("morale",true);beginMini();mini.objects=[{x:320,y:290,w:76,warn:0,speed:0}];mini.spawn=100;tick(.01);tick(.01)');
+  check('collision with invulnerability','mini.hits===1');
+  run('mini.inv=0;mini.hits=4;tick(.01)');check('fifth hit loses','mini.phase==="result" && mini.hits===5');
+  run('closeMini();openMini("team",true);beginMini();mini.spawn=100;mini.t=20;tick(.01)');
+  check('survival wins','mini.message.startsWith("MISSION CLEAR")');
+  run('closeMini();state.health=25;state.pending=["health"];state.chosen=true;save();state=null;load()');
+  check('pending crisis restored','mini.type==="health" && state.health===25');
+  run("start('완주');for(let month=1;month<=24;month++){choose(month%3);while(mini){beginMini();endMini(true);closeMini();}next();}");
+  check('24 month ending','state.done && state.month===24 && document.getElementById("resultDialog").open');
+  run('document.getElementById("resultDialog").close();state=null;load()');
+  check('ending restored','state.done && document.getElementById("resultDialog").open');
+  results.textContent='PASS: '+passed+' checks';
+ }catch(error){results.textContent='FAIL after '+passed+' checks: '+error.stack;}
+ finally{if(saved===null)w.localStorage.removeItem('barracks-arcade-v2');else w.localStorage.setItem('barracks-arcade-v2',saved);}
+};
+</script>
